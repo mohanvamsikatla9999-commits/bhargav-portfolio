@@ -1,82 +1,66 @@
 import { motion } from 'framer-motion'
-import SectionHeader from '@/components/SectionHeader'
-import { card, cardHover } from '@/lib/styles'
 
 const FLOW = [
-  { label: 'Client', sub: 'React / Browser', icon: '◻', accent: false },
-  { label: 'API Gateway', sub: 'Rate Limit · Auth · CORS', icon: '⚡', accent: true },
-  { label: 'Service Layer', sub: 'Business Logic · Validation', icon: '⚙', accent: false },
-  { label: 'Database', sub: 'MongoDB · MySQL', icon: '⬡', accent: false },
+  { label: 'Client', sub: 'React / Browser' },
+  { label: 'API Gateway', sub: 'Auth · Rate Limit · CORS', accent: true },
+  { label: 'Service Layer', sub: 'Business Logic' },
+  { label: 'Database', sub: 'MongoDB · MySQL' },
 ]
 
-const PATTERNS = [
-  { title: 'Layered Architecture', code: 'Controller → Service → Repository', desc: 'No business logic in controllers. Services own the domain. Clean separation of concerns.' },
-  { title: 'Middleware Chain', code: 'Auth → RateLimit → Validate → Handler', desc: 'Every request passes through a composable middleware pipeline before reaching business logic.' },
-  { title: 'Error Propagation', code: 'throw AppError → errorHandler middleware', desc: 'Custom error classes carry HTTP status codes. One central handler formats all responses.' },
-  { title: 'JWT Auth Flow', code: 'Login → AccessToken + RefreshToken', desc: 'Short-lived access tokens. Refresh token rotation on use. Stateless, scalable auth.' },
+const PRINCIPLES = [
+  { title: 'Separation of Concerns', desc: 'Controllers handle HTTP. Services own business logic. No cross-contamination.' },
+  { title: 'Fail Fast', desc: 'Validate at the edge. Reject bad input before it reaches business logic.' },
+  { title: 'Stateless Auth', desc: 'JWT access tokens expire fast. Refresh tokens rotate on use.' },
+  { title: 'Centralized Errors', desc: 'One error handler. Consistent response shape. No scattered try-catch.' },
 ]
 
 export default function SystemDesign() {
   return (
-    <section id="system-design" style={{ padding: '120px 0' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 48px' }}>
-        <SectionHeader
-          num="04"
-          label="System Design"
-          title={<>How I think<br /><span style={{ background: 'linear-gradient(135deg, #22D3EE, #0891b2)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>about systems.</span></>}
-        />
+    <section id="system-design" style={{ padding: '160px 24px', background: '#000', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
 
-        {/* Architecture diagram */}
+        <motion.p
+          initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: '80px', textAlign: 'center' }}>
+          System Design
+        </motion.p>
+
+        {/* Flow */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-          style={{ ...card, padding: '40px', marginBottom: '24px', position: 'relative', overflow: 'hidden' }}
-        >
-          <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: '400px', height: '200px', background: 'radial-gradient(ellipse, rgba(34,211,238,0.05) 0%, transparent 70%)', pointerEvents: 'none' }} />
-          <div style={{ fontSize: '10px', fontFamily: 'monospace', color: 'rgba(100,116,139,1)', letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: '32px' }}>Request Flow Architecture</div>
-
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
-            {FLOW.map((node, i) => (
-              <div key={node.label} style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1 }}>
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.85 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
-                  transition={{ delay: i * 0.15, duration: 0.5 }}
-                  style={{
-                    flex: 1, padding: '20px 16px', borderRadius: '14px', textAlign: 'center',
-                    border: node.accent ? '1px solid rgba(34,211,238,0.3)' : '1px solid rgba(255,255,255,0.08)',
-                    background: node.accent ? 'rgba(34,211,238,0.06)' : 'rgba(255,255,255,0.02)',
-                    boxShadow: node.accent ? '0 0 20px rgba(34,211,238,0.08)' : 'none',
-                  }}
-                >
-                  <div style={{ fontSize: '20px', marginBottom: '8px', color: node.accent ? '#22D3EE' : 'rgba(148,163,184,1)' }}>{node.icon}</div>
-                  <div style={{ fontSize: '13px', fontWeight: 700, color: node.accent ? '#22D3EE' : '#fff', marginBottom: '4px' }}>{node.label}</div>
-                  <div style={{ fontSize: '11px', color: 'rgba(100,116,139,1)' }}>{node.sub}</div>
-                </motion.div>
-                {i < FLOW.length - 1 && (
-                  <div style={{ color: 'rgba(71,85,105,1)', fontSize: '18px', flexShrink: 0 }}>→</div>
-                )}
+          initial={{ opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0', marginBottom: '120px', flexWrap: 'wrap' }}>
+          {FLOW.map((node, i) => (
+            <div key={node.label} style={{ display: 'flex', alignItems: 'center' }}>
+              <div style={{ textAlign: 'center', padding: '24px 32px' }}>
+                <div style={{ fontSize: '14px', fontWeight: 700, color: node.accent ? '#FF3B30' : '#fff', letterSpacing: '-0.02em', marginBottom: '6px' }}>
+                  {node.label}
+                </div>
+                <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', letterSpacing: '0.02em' }}>{node.sub}</div>
+                {node.accent && <div style={{ width: '24px', height: '2px', background: '#FF3B30', margin: '10px auto 0' }} />}
               </div>
-            ))}
-          </div>
-
-          <div style={{ marginTop: '24px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to right, transparent, rgba(34,211,238,0.15), transparent)' }} />
-            <span style={{ fontSize: '11px', fontFamily: 'monospace', color: 'rgba(71,85,105,1)' }}>Response flows back ←</span>
-            <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to right, transparent, rgba(34,211,238,0.15), transparent)' }} />
-          </div>
+              {i < FLOW.length - 1 && (
+                <div style={{ color: 'rgba(255,255,255,0.2)', fontSize: '18px', padding: '0 4px' }}>→</div>
+              )}
+            </div>
+          ))}
         </motion.div>
 
-        {/* Patterns */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-          {PATTERNS.map((p, i) => (
+        {/* Principles */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0' }}>
+          {PRINCIPLES.map((p, i) => (
             <motion.div
               key={p.title}
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.6 }}
-              style={{ ...card, padding: '24px' }}
-              {...cardHover}
-            >
-              <div style={{ fontSize: '14px', fontWeight: 700, color: '#fff', marginBottom: '10px' }}>{p.title}</div>
-              <div style={{ fontFamily: 'monospace', fontSize: '12px', color: '#22D3EE', background: 'rgba(34,211,238,0.05)', border: '1px solid rgba(34,211,238,0.15)', borderRadius: '8px', padding: '8px 12px', marginBottom: '12px' }}>{p.code}</div>
-              <p style={{ fontSize: '13px', color: 'rgba(100,116,139,1)', lineHeight: 1.7 }}>{p.desc}</p>
+              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              style={{
+                padding: '40px',
+                borderTop: '1px solid rgba(255,255,255,0.06)',
+                borderRight: i % 2 === 0 ? '1px solid rgba(255,255,255,0.06)' : 'none',
+              }}>
+              <div style={{ fontSize: '15px', fontWeight: 700, color: '#fff', letterSpacing: '-0.02em', marginBottom: '12px' }}>{p.title}</div>
+              <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)', lineHeight: 1.7, letterSpacing: '-0.01em' }}>{p.desc}</p>
             </motion.div>
           ))}
         </div>

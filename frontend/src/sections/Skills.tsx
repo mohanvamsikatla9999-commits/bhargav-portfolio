@@ -1,86 +1,58 @@
 import { motion } from 'framer-motion'
-import { SKILL_CATEGORIES } from '@/lib/data'
-import SectionHeader from '@/components/SectionHeader'
-import { card, cardHover } from '@/lib/styles'
 
-const TICKER = ['TypeScript', 'Node.js', 'React', 'MongoDB', 'Express', 'Python', 'MySQL', 'Git', 'Java', 'JWT', 'REST API', 'Linux', 'Docker', 'Redis']
+const ROWS = [
+  'TypeScript · JavaScript · Java · Python',
+  'Node.js · Express · REST APIs · JWT · Rate Limiting',
+  'React · Tailwind CSS · Responsive Design',
+  'MongoDB · MySQL · Schema Design · Indexing',
+  'System Design · MVC · Error Handling · Caching',
+  'Git · GitHub · Postman · Linux · Docker',
+]
 
 export default function Skills() {
   return (
-    <section id="skills" style={{ padding: '120px 0 0' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 48px' }}>
-        <SectionHeader
-          num="02"
-          label="Skills"
-          title={<>Built through<br /><span style={{ background: 'linear-gradient(135deg, #22D3EE, #0891b2)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>real projects.</span></>}
-        />
+    <section id="skills" style={{ padding: '160px 24px', background: '#000', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '48px' }}>
-          {SKILL_CATEGORIES.map((cat, ci) => (
+        <motion.p
+          initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: '80px', textAlign: 'center' }}>
+          Skills & Stack
+        </motion.p>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+          {ROWS.map((row, i) => (
             <motion.div
-              key={cat.label}
-              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: ci * 0.07, duration: 0.6 }}
-              style={{ ...card, padding: '24px' }}
-              {...cardHover}
+              key={i}
+              initial={{ opacity: 0, x: -24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: i * 0.07, ease: [0.16, 1, 0.3, 1] }}
+              style={{ padding: '28px 0', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '24px' }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
-                <div style={{ width: '34px', height: '34px', borderRadius: '10px', background: 'rgba(34,211,238,0.08)', border: '1px solid rgba(34,211,238,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#22D3EE', fontSize: '13px', fontFamily: 'monospace' }}>
-                  {cat.icon}
-                </div>
-                <span style={{ fontSize: '13px', fontWeight: 600, color: '#fff' }}>{cat.label}</span>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                {cat.skills.map((skill, si) => (
-                  <div key={skill.name}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                      <span style={{ fontSize: '13px', color: 'rgba(148,163,184,1)' }}>{skill.name}</span>
-                      <span style={{ fontSize: '11px', color: 'rgba(71,85,105,1)', fontFamily: 'monospace' }}>{skill.level}%</span>
-                    </div>
-                    <div style={{ height: '3px', background: 'rgba(255,255,255,0.05)', borderRadius: '999px', overflow: 'hidden' }}>
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${skill.level}%` }}
-                        viewport={{ once: true }}
-                        transition={{ delay: ci * 0.07 + si * 0.06 + 0.3, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                        style={{ height: '100%', background: 'linear-gradient(90deg, #22D3EE, #0891b2)', borderRadius: '999px', boxShadow: '0 0 6px rgba(34,211,238,0.5)' }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <span style={{ fontSize: 'clamp(1rem, 2.5vw, 1.35rem)', fontWeight: 500, color: 'rgba(255,255,255,0.75)', letterSpacing: '-0.02em', lineHeight: 1.4 }}>
+                {row}
+              </span>
+              <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.2)', fontWeight: 500, flexShrink: 0 }}>
+                0{i + 1}
+              </span>
             </motion.div>
           ))}
         </div>
 
         {/* Currently learning */}
-        <div style={{ ...card, padding: '24px', border: '1px solid rgba(34,211,238,0.12)', background: 'rgba(34,211,238,0.03)', marginBottom: '48px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#22D3EE] opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#22D3EE]" />
-            </span>
-            <span style={{ fontSize: '10px', fontFamily: 'monospace', color: '#22D3EE', letterSpacing: '0.18em', textTransform: 'uppercase' }}>Currently Learning</span>
-          </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-            {['System Design', 'Microservices', 'Docker', 'Redis', 'Kubernetes basics'].map(item => (
-              <span key={item} style={{ fontSize: '13px', color: 'rgba(203,213,225,1)', border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)', padding: '8px 16px', borderRadius: '10px' }}>{item}</span>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Ticker */}
-      <div style={{ position: 'relative', overflow: 'hidden', padding: '16px 0', borderTop: '1px solid rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.04)', marginBottom: '0' }}>
-        <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '120px', background: 'linear-gradient(to right, #060D1A, transparent)', zIndex: 10, pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '120px', background: 'linear-gradient(to left, #060D1A, transparent)', zIndex: 10, pointerEvents: 'none' }} />
-        <div className="ticker" style={{ display: 'flex', gap: '12px', width: 'max-content' }}>
-          {[...TICKER, ...TICKER, ...TICKER].map((tech, i) => (
-            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '10px', whiteSpace: 'nowrap' }}>
-              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#22D3EE', opacity: 0.7 }} />
-              <span style={{ fontSize: '13px', color: 'rgba(148,163,184,1)', fontFamily: 'monospace' }}>{tech}</span>
-            </div>
-          ))}
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+          transition={{ duration: 0.9, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          style={{ marginTop: '80px', display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+          <span style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#FF3B30' }}>
+            Currently Learning
+          </span>
+          <span style={{ fontSize: '15px', color: 'rgba(255,255,255,0.5)', letterSpacing: '-0.01em' }}>
+            System Design · Microservices · Docker · Redis
+          </span>
+        </motion.div>
       </div>
     </section>
   )
