@@ -44,7 +44,7 @@ export default function Hero() {
 
       {/* Main content — full width container with proper padding */}
       <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '100px 48px 80px', boxSizing: 'border-box' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 400px', gap: '80px', alignItems: 'center' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'clamp(300px, 1fr, 9999px) 400px', gap: '80px', alignItems: 'center' }}>
 
           {/* LEFT */}
           <div style={{ minWidth: 0 }}>
